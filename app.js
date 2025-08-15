@@ -1,8 +1,18 @@
 // Import Express.js
 import express from 'express';
+import cors from 'cors';
 
 // Create an Express app
 const app = express();
+
+
+app.use(cors())
+
+// app.use(cors({
+//     origin:'<your_origin>',
+//     methods:['GET','POST'],
+//     allowedHeaders:['Content-Type','Authorization']
+// }))
 
 // Middleware to parse JSON bodies
 app.use(express.json());
@@ -24,7 +34,7 @@ app.get('/', (req, res) => {
 });
 
 // Route for POST requests
-app.post('/', (req, res) => {
+app.post('/existing-number', (req, res) => {
   const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19);
   console.log(`\n\nWebhook received ${timestamp}\n`);
   console.log(JSON.stringify(req.body, null, 2));
