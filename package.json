@@ -1,0 +1,23 @@
+{
+  "name": "webhook-demo",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/sunriseateast/webhook-demo#readme",
+  "bugs": {
+    "url": "https://github.com/sunriseateast/webhook-demo/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sunriseateast/webhook-demo.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
