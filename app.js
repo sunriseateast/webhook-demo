@@ -38,17 +38,15 @@ app.post('/existing-number', (req, res) => {
   const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19);
   console.log(`\n\nWebhook received ${timestamp}\n`);
   console.log(JSON.stringify(req.body, null, 2));
-//   res.status(200).end();
-  res.send('ok')
+  res.json({success:true,message:'Data recieved'})
 });
 
 
 app.post('/', (req, res) => {
   const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19);
-  console.log(`\n\nWebhook received-2 ${timestamp}\n`);
+  console.log(`\n\nWebhook received-02 ${timestamp}\n`);
   console.log(JSON.stringify(req.body, null, 2));
-//   res.status(200).end();
-  res.send('ok')
+  res.status(200).end();
 });
 
 // Start the server
