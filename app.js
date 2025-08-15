@@ -42,6 +42,15 @@ app.post('/existing-number', (req, res) => {
   res.send('ok')
 });
 
+
+app.post('/', (req, res) => {
+  const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19);
+  console.log(`\n\nWebhook received-2 ${timestamp}\n`);
+  console.log(JSON.stringify(req.body, null, 2));
+//   res.status(200).end();
+  res.send('ok')
+});
+
 // Start the server
 app.listen(port, () => {
   console.log(`\nListening on port ${port}\n`);
