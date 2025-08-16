@@ -38,10 +38,10 @@ app.post('/existing-number', (req, res) => {
   const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19);
   console.log(`\n\nWABA Details: ${timestamp}\n`);
   // console.log(JSON.stringify(req.body, null, 2));
-
-  const WABAid=res.singnupData.data.waba_id
-  const businessid=res.singnupData.data.business_id
-  const tempToken=res.tempToken
+  const payload=JSON.parse(res)
+  const WABAid=payload.singnupData.data.waba_id
+  const businessid=payload.singnupData.data.business_id
+  const tempToken=payload.tempToken
 
   console.log("WABA id is:",WABAid)
   console.log("Business id is:",businessid)
