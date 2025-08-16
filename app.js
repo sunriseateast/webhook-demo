@@ -47,7 +47,22 @@ app.post('/existing-number', (req, res) => {
   console.log("Business id is:",businessid)
   console.log("temperory token is:",tempToken)
 
-  res.json({success:true,message:'Data recieved'})
+
+  const url='https://graph.facebook.com/v21.0/oauth/access_token'
+  url.searchParams.append('client_id',process.env.FB_APP_ID)
+  url.searchParams.append('client_secret',process.env.FB_APP_SECRET)
+  url.searchParams.append('code',tempToken)
+
+  fetch(url.toString())
+  .then(res=>res.json())
+  .then(response=>{
+    console.log("Business Token is:",response)
+    res.json({success:true,message:response})
+  })
+  .catch(error=>{
+    console.log("There is an Error:",error)
+    res.json({success:false,message:'someting went wrong'})
+  })
 });
 
 
