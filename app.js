@@ -48,7 +48,7 @@ app.post('/existing-number', (req, res) => {
   console.log("temperory token is:",tempToken)
 
 
-  const url='https://graph.facebook.com/v21.0/oauth/access_token'
+  const url=new URL('https://graph.facebook.com/v21.0/oauth/access_token')
   url.searchParams.append('client_id',process.env.FB_APP_ID)
   url.searchParams.append('client_secret',process.env.FB_APP_SECRET)
   url.searchParams.append('code',tempToken)
