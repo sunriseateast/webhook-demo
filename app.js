@@ -59,7 +59,7 @@ app.post('/existing-number', (req, res) => {
   .then(res=>res.json())
   .then(response=>{
     console.log("Business Token is:",response)
-    bSUAT=response
+    bSUAT=response.access_token
     res.json({success:true,message:"bSUAT created successfually"})
   })
   .catch(error=>{
@@ -82,7 +82,7 @@ app.post('/existing-number', (req, res) => {
       res.json({success:true,message:"Acess Token removed successfully"})
     })
     .catch(error=>{
-      console.log("Access Toke removed error:",error)
+      console.log("Access Token removed error:",error)
       res.json({success:false,message:"Access Token removed error"})
     })
   },30000)
