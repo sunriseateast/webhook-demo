@@ -60,7 +60,10 @@ app.post('/existing-number', (req, res) => {
     console.log("Business Token is:",response)
     const bSUAT=response.access_token
     console.log(bSUAT)
+
     const revokeUrl=new URL('https://graph.facebook.com/v23.0/oauth/revoke')
+    revokeUrl.searchParams.append('client_id',process.env.FB_APP_ID)
+    revokeUrl.searchParams.append('client_secret',process.env.FB_APP_SECRET)
     revokeUrl.searchParams.append('revoke_token',bSUAT)
     revokeUrl.searchParams.append('access_token',process.env.FB_SYSTEM_ADMIN)
 
