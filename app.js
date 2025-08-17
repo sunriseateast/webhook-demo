@@ -59,13 +59,12 @@ app.post('/existing-number', (req, res) => {
   .then(response=>{
     console.log("Business Token is:",response)
     const bSUAT=response.access_token
-    res.json({success:true,message:"bSUAT created successfually"})
-
+    console.log(bSUAT)
     const revokeUrl=new URL('https://graph.facebook.com/v23.0/oauth/revoke')
     revokeUrl.searchParams.append('client_id',process.env.FB_APP_ID)
     revokeUrl.searchParams.append('client_secret',process.env.FB_APP_SECRET)
     revokeUrl.searchParams.append('revoke_token',bSUAT)
-    revokeUrl.searchParams.append('access_token',process.env.VERIFY_TOKEN)
+    revokeUrl.searchParams.append('access_token',`${process.env.FB_APP_ID}|${process.env.FB_APP_SECRET}`)
 
     setTimeout(()=>{
       fetch(revokeUrl.toString())
