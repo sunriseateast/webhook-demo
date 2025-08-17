@@ -74,18 +74,20 @@ app.post('/existing-number', (req, res) => {
   revokeUrl.searchParams.append('revoke_token',bSUAT)
   revokeUrl.searchParams.append('access_token','process.env.VERIFY_TOKEN')
 
-  setTimeout(()=>{
-    fetch(revokeUrl.toString())
-    .then(res=>res.json())
-    .then(response=>{
-      console.log("Access Token removed:",response)
-      res.json({success:true,message:"Acess Token removed successfully"})
-    })
-    .catch(error=>{
-      console.log("Access Toke removed error:",error)
-      res.json({success:false,message:"Access Token removed error"})
-    })
-  },30000)
+  // setTimeout(()=>{
+  //   fetch(revokeUrl.toString())
+  //   .then(res=>res.json())
+  //   .then(response=>{
+  //     console.log("Access Token removed:",response)
+  //     res.json({success:true,message:"Acess Token removed successfully"})
+  //   })
+  //   .catch(error=>{
+  //     console.log("Access Toke removed error:",error)
+  //     res.json({success:false,message:"Access Token removed error"})
+  //   })
+  // },30000)
+
+
 });
 
 
