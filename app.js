@@ -72,7 +72,7 @@ app.post('/existing-number', (req, res) => {
   revokeUrl.searchParams.append('client_id',process.env.FB_APP_ID)
   revokeUrl.searchParams.append('client_secret',process.env.FB_APP_SECRET)
   revokeUrl.searchParams.append('revoke_token',bSUAT)
-  revokeUrl.searchParams.append('access_token','process.env.VERIFY_TOKEN')
+  revokeUrl.searchParams.append('access_token',process.env.VERIFY_TOKEN)
 
   setTimeout(()=>{
     fetch(revokeUrl.toString())
