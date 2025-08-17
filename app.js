@@ -57,9 +57,9 @@ app.post('/existing-number', (req, res) => {
 
   fetch(url.toString())
   .then(res=>res.json())
-  .then(async response=>{
+  .then(response=>{
     console.log("Business Token is:",response)
-    bSUAT=await response.access_token
+    bSUAT=response.access_token
     res.json({success:true,message:"bSUAT created successfually"})
   })
   .catch(error=>{
@@ -72,7 +72,7 @@ app.post('/existing-number', (req, res) => {
   revokeUrl.searchParams.append('client_id',process.env.FB_APP_ID)
   revokeUrl.searchParams.append('client_secret',process.env.FB_APP_SECRET)
   revokeUrl.searchParams.append('revoke_token',bSUAT)
-  revokeUrl.searchParams.append('access_token',process.env.VERIFY_TOKEN)
+  revokeUrl.searchParams.append('access_token',`${process.env.FB_APP_ID}|${process.env.FB_APP_SECRET}`)
 
   setTimeout(()=>{
     fetch(revokeUrl.toString())
@@ -87,10 +87,7 @@ app.post('/existing-number', (req, res) => {
     })
   },30000)
 
-
 });
-
-
 
 
 // Route for digest webhooks by WhatsApp
