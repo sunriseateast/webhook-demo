@@ -57,27 +57,45 @@ app.post('/existing-number', (req, res) => {
   fetch(url.toString())
   .then(res=>res.json())
   .then(response=>{
-    console.log("Business Token is:",response)
-    const bSUAT=response.access_token
-    console.log(bSUAT)
+    console.log("Old Business Token is:",response)
+    const old_bSUAT=response.access_token
 
-    const revokeUrl=new URL('https://graph.facebook.com/v23.0/oauth/revoke')
-    revokeUrl.searchParams.append('client_id',process.env.FB_APP_ID)
-    revokeUrl.searchParams.append('client_secret',process.env.FB_APP_SECRET)
-    revokeUrl.searchParams.append('revoke_token',bSUAT)
-    revokeUrl.searchParams.append('access_token',process.env.FB_SYSTEM_ADMIN)
+    // To get refresh bSUAT
+    const refreshURL=new URL('https://graph.facebook.com/v21.0/oauth/access_token')
+    refreshURL.searchParams.append('grant_type','fb_exchange_token')
+    refreshURL.searchParams.append('client_id',process.env.FB_APP_ID)
+    refreshURL.searchParams.append('client_secret',process.env.FB_APP_SECRET)
+    refreshURL.searchParams.append('set_token_expires_in_60_days',true)
+    refreshURL.searchParams.append('fb_exchange_token',old_bSUAT)
 
-    setTimeout(()=>{
-      fetch(revokeUrl.toString())
-      .then(res=>res.json())
-      .then(response=>{
-        console.log("Access Token removed:",response)
-      })
-      .catch(error=>{
-        console.log("Access Token removed error:",error)
-      })
-    },30000)
+    
+    fetch(refreshURL.toString())
+    .then(res=>res.json())
+    .then(response=>{
+      console.log("New Business Token is:",response)
 
+      // To revoke bSUAT
+      const bSUAT=response.access_token
+      const revokeUrl=new URL('https://graph.facebook.com/v23.0/oauth/revoke')
+      revokeUrl.searchParams.append('client_id',process.env.FB_APP_ID)
+      revokeUrl.searchParams.append('client_secret',process.env.FB_APP_SECRET)
+      revokeUrl.searchParams.append('revoke_token',bSUAT)
+      revokeUrl.searchParams.append('access_token',process.env.FB_SYSTEM_ADMIN)
+
+      setTimeout(()=>{
+        fetch(revokeUrl.toString())
+        .then(res=>res.json())
+        .then(response=>{
+          console.log("Access Token removed:",response)
+        })
+        .catch(error=>{
+          console.log("Access Token removed error:",error)
+        })
+      },30000)
+    })
+    .catch(error=>{
+      console.log("Refresh Error is there:",error)
+    })
   })
   .catch(error=>{
     console.log("There is an Error:",error)
