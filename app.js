@@ -57,9 +57,9 @@ app.post('/existing-number', (req, res) => {
 
   fetch(url.toString())
   .then(res=>res.json())
-  .then(response=>{
+  .then(async response=>{
     console.log("Business Token is:",response)
-    bSUAT=response.access_token
+    bSUAT=await response.access_token
     res.json({success:true,message:"bSUAT created successfually"})
   })
   .catch(error=>{
