@@ -40,6 +40,7 @@ app.post('/existing-number', (req, res) => {
   // console.log(JSON.stringify(req.body, null, 2));
   const payload=req.body
   const WABAid=payload.singnupData.data.waba_id
+  const phone_id=payload.singnupData.data.phone_number_id
   const businessid=payload.singnupData.data.business_id
   const tempToken=payload.tempToken
 
@@ -73,8 +74,7 @@ app.post('/existing-number', (req, res) => {
       //console.log("New Business Token is:",response)
       const new_bSUAT=response.access_token
 
-      console.log("payload is:",payload)
-      console.log("WABA id is:",WABAid)
+      console.log("PhoneId is:",phone_id)
       console.log("New Business Token is:",new_bSUAT)
 
 
@@ -87,6 +87,25 @@ app.post('/existing-number', (req, res) => {
         }
       })
       //console.log(subscribe_response)
+
+
+      //register client for using cloudapi
+      const registerURL=(`https://graph.facebook.com/v21.0/${phone_id}/register`)
+      const payload={
+        messaging_product:"whatsapp",
+        pin:"123456"
+      }
+      const register_response=await fetch(registerURL,{
+        method:"GET",
+        headers:{
+          "Content-Type":"application/json",
+          "Authorization":`Bearer ${new_bSUAT}`
+        },
+        body:JSON.stringify(payload)
+      })
+
+      console.log(register_response)
+
 
       // To revoke bSUAT
       // const bSUAT=response.access_token
