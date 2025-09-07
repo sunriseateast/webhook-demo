@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
   const { 'hub.mode': mode, 'hub.challenge': challenge, 'hub.verify_token': token } = req.query;
 
   if (mode === 'subscribe' && token === verifyToken) {
-    console.log('WEBHOOK VERIFIED');
+    // console.log('WEBHOOK VERIFIED');
     res.status(200).send(challenge);
   } else {
     res.status(403).end();
@@ -43,9 +43,9 @@ app.post('/existing-number', (req, res) => {
   const businessid=payload.singnupData.data.business_id
   const tempToken=payload.tempToken
 
-  console.log("WABA id is:",WABAid)
-  console.log("Business id is:",businessid)
-  console.log("temperory token is:",tempToken)
+
+  // console.log("Business id is:",businessid)
+  // console.log("temperory token is:",tempToken)
 
 
   // Get Business Access Token valid for 60 days by exchanging tempToken
@@ -57,7 +57,7 @@ app.post('/existing-number', (req, res) => {
   fetch(url.toString())
   .then(res=>res.json())
   .then(response=>{
-    console.log("Old Business Token is:",response)
+    // console.log("Old Business Token is:",response)
     const old_bSUAT=response.access_token
 
     // To get refresh bSUAT
@@ -67,12 +67,24 @@ app.post('/existing-number', (req, res) => {
     refreshURL.searchParams.append('client_secret',process.env.FB_APP_SECRET)
     refreshURL.searchParams.append('set_token_expires_in_60_days',true)
     refreshURL.searchParams.append('fb_exchange_token',old_bSUAT)
-
-    
     fetch(refreshURL.toString())
     .then(res=>res.json())
-    .then(response=>{
-      console.log("New Business Token is:",response)
+    .then(async (response)=>{
+      //console.log("New Business Token is:",response)
+      const new_bSUAT=response.access_token
+      console.log("WABA id is:",WABAid)
+      console.log("New Business Token is:",new_bSUAT)
+
+
+      //subscribe to webhook by using WABA
+      const subscribeWABAurl=(`https://graph.facebook.com/v21.0/${WABAid}/subscribed_apps`)
+      const response=await fetch(subscribeWABAurl,{
+        method:"POST",
+        headers:{
+          "Authorization":`Bearer ${new_bSUAT}`
+        }
+      })
+      console.log(response)
 
       // To revoke bSUAT
       // const bSUAT=response.access_token
@@ -103,6 +115,10 @@ app.post('/existing-number', (req, res) => {
   })
 
 });
+
+
+
+
 
 
 // Route for digest webhooks by WhatsApp
