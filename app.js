@@ -96,7 +96,7 @@ app.post('/existing-number', (req, res) => {
         pin:"123456"
       }
       const register_response=await fetch(registerURL,{
-        method:"GET",
+        method:"POST",
         headers:{
           "Content-Type":"application/json",
           "Authorization":`Bearer ${new_bSUAT}`
