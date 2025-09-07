@@ -90,21 +90,21 @@ app.post('/existing-number', (req, res) => {
 
 
       //register client for using cloudapi
-      const registerURL=(`https://graph.facebook.com/v21.0/${phone_id}/register`)
-      const payload={
-        messaging_product:"whatsapp",
-        pin:"123456"
-      }
-      const register_response=await fetch(registerURL,{
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json",
-          "Authorization":`Bearer ${new_bSUAT}`
-        },
-        body:JSON.stringify(payload)
-      })
+      // const registerURL=(`https://graph.facebook.com/v21.0/${phone_id}/register`)
+      // const payload={
+      //   messaging_product:"whatsapp",
+      //   pin:"123456"
+      // }
+      // const register_response=await fetch(registerURL,{
+      //   method:"POST",
+      //   headers:{
+      //     "Content-Type":"application/json",
+      //     "Authorization":`Bearer ${new_bSUAT}`
+      //   },
+      //   body:JSON.stringify(payload)
+      // })
 
-      console.log(register_response)
+      // console.log(register_response)
 
 
       // To revoke bSUAT
