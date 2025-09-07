@@ -72,19 +72,21 @@ app.post('/existing-number', (req, res) => {
     .then(async (response)=>{
       //console.log("New Business Token is:",response)
       const new_bSUAT=response.access_token
+
+      console.log("payload is:",payload)
       console.log("WABA id is:",WABAid)
       console.log("New Business Token is:",new_bSUAT)
 
 
       //subscribe to webhook by using WABA
-      const subscribeWABAurl=(`https://graph.facebook.com/v21.0/${WABAid}/subscribed_apps`)
+      const subscribeWABAurl=(`https://graph.facebook.com/v23.0/${WABAid}/subscribed_apps`)
       const subscribe_response=await fetch(subscribeWABAurl,{
         method:"POST",
         headers:{
           "Authorization":`Bearer ${new_bSUAT}`
         }
       })
-      console.log(subscribe_response)
+      //console.log(subscribe_response)
 
       // To revoke bSUAT
       // const bSUAT=response.access_token
@@ -133,3 +135,5 @@ app.post('/', (req, res) => {
 app.listen(port, () => {
   console.log(`\nListening on port ${port}\n`);
 });
+
+
