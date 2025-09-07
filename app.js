@@ -78,13 +78,13 @@ app.post('/existing-number', (req, res) => {
 
       //subscribe to webhook by using WABA
       const subscribeWABAurl=(`https://graph.facebook.com/v21.0/${WABAid}/subscribed_apps`)
-      const response=await fetch(subscribeWABAurl,{
+      const subscribe_response=await fetch(subscribeWABAurl,{
         method:"POST",
         headers:{
           "Authorization":`Bearer ${new_bSUAT}`
         }
       })
-      console.log(response)
+      console.log(subscribe_response)
 
       // To revoke bSUAT
       // const bSUAT=response.access_token
